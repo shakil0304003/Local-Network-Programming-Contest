@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ProgrammingContest" Class="ProgrammingContestDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=CQL-01\SQLEXPRESS;Initial Catalog=ProgrammingContest;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ProgrammingContestConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="IPAddress" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="User_ContestPermission" Member="ContestPermissions" ThisKey="ID" OtherKey="UserId" Type="ContestPermission" />
+      <Association Name="User_Solution" Member="Solutions" ThisKey="ID" OtherKey="UserId" Type="Solution" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Result" Member="Results">
+    <Type Name="Result">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="Result_Solution" Member="Solutions" ThisKey="ID" OtherKey="ResultId" Type="Solution" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ContestPermission" Member="ContestPermissions">
+    <Type Name="ContestPermission">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ContestId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Association Name="User_ContestPermission" Member="User" ThisKey="UserId" OtherKey="ID" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="ContestSetting_ContestPermission" Member="ContestSetting" ThisKey="ContestId" OtherKey="ID" Type="ContestSetting" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ContestSetting" Member="ContestSettings">
+    <Type Name="ContestSetting">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StartTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ArrangedBy" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="IsPrivate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="ContestSetting_ContestPermission" Member="ContestPermissions" ThisKey="ID" OtherKey="ContestId" Type="ContestPermission" />
+      <Association Name="ContestSetting_Problem" Member="Problems" ThisKey="ID" OtherKey="ContestID" Type="Problem" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Problems" Member="Problems">
+    <Type Name="Problem">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Statement" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="InputFile" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="OutputFile" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Time" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="ContestID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Input" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Output" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Problem_Solution" Member="Solutions" ThisKey="ID" OtherKey="ProblemId" Type="Solution" />
+      <Association Name="ContestSetting_Problem" Member="ContestSetting" ThisKey="ContestID" OtherKey="ID" Type="ContestSetting" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Solution" Member="Solutions">
+    <Type Name="Solution">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="ProblemId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="ContestId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="ResultId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="time" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FileName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="RequireTime" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Output" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SolutionFileName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="Problem_Solution" Member="Problem" ThisKey="ProblemId" OtherKey="ID" Type="Problem" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Result_Solution" Member="Result" ThisKey="ResultId" OtherKey="ID" Type="Result" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="User_Solution" Member="User" ThisKey="UserId" OtherKey="ID" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+</Database>

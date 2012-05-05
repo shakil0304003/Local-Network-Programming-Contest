@@ -1,0 +1,44 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Admin.master.cs" Inherits="Admin_MasterPages_Admin" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Master</title>
+    <link href="~/styles.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <div id="divHeader" style="text-align:center;">
+            <strong style="font-size: large;">Welcome to the programming contest's
+                judge system</strong>
+            <div class="clear">
+            </div>
+            <div style="">
+                <a href="SetContestSetting.aspx">Contest Setting Set</a>
+                <a href="ProblemSet.aspx">Problem Set</a>
+                <a href="ManageUser.aspx">Manage User</a> 
+                <a href="JudgeStatus.aspx">Judge Status</a>
+                <a href="ChangePassword.aspx">Change Password</a>
+                <asp:LinkButton ID="LinkButton1" runat="server" onclick="LinkButton1_Click">LogOut</asp:LinkButton>
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        <div id="divMiddle">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="clear">
+        </div>
+        <br />
+        <br />
+        <div id="divFooter" style="text-align:center;">
+            This is the site for astha's monthly programming contest.
+        </div>
+    </div>
+    </form>
+</body>
+</html>
